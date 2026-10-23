@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/GENILLA_SMART_HIGHSCHOOL_LOST_AND_FOUND_SYSTEM-main.iml" filepath="$PROJECT_DIR$/.idea/GENILLA_SMART_HIGHSCHOOL_LOST_AND_FOUND_SYSTEM-main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GENILLA_SMART_HIGHSCHOOL_LOST_AND_FOUND_SYSTEM-main/SmartHighSchoolLostAndFound/SmartHighSchoolLostAndFound.iml" filepath="$PROJECT_DIR$/GENILLA_SMART_HIGHSCHOOL_LOST_AND_FOUND_SYSTEM-main/SmartHighSchoolLostAndFound/SmartHighSchoolLostAndFound.iml" />
     </modules>
   </component>
 </project>

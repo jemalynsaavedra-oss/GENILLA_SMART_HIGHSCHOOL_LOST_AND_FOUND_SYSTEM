@@ -4,7 +4,11 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/GENILLA_SMART_HIGHSCHOOL_LOST_AND_FOUND_SYSTEM-main/SmartHighSchoolLostAndFound/pom.xml" />
+=======
+        <option value="$PROJECT_DIR$/SmartHighSchoolLostAndFound/pom.xml" />
+>>>>>>> 84672b8fb568ca312140d19a8093a42f5295ca31
       </list>
     </option>
   </component>

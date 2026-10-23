@@ -9,5 +9,8 @@
         <module name="SmartHighSchoolLostAndFound" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="SmartHighSchoolLostAndFound" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>
