@@ -1,0 +1,16 @@
+package com.smartlostfound.ui;
+
+import com.smartlostfound.dao.UserDao;
+import com.smartlostfound.model.*;
+import java.sql.SQLException;
+import java.util.Scanner;
+
+public class Authentication {
+    private final UserDao userDao;private final Scanner scanner;
+    public Authentication(UserDao userDao,Scanner scanner){this.userDao=userDao;this.scanner=scanner;}
+    public void start(){boolean running=true;while(running){System.out.println("\n==================================\n SMART HIGH SCHOOL LOST AND FOUND\n==================================\n1. Register Account\n2. Login\n3. Exit\nChoose an option: ");switch(scanner.nextLine().trim()){case "1"->registerAccount();case "2"->running=!loginAccount();case "3"->running=false;default->System.out.println("Invalid choice.");}}System.out.println("Thank you for using the system!");}
+    private void registerAccount(){try{System.out.println("\n--- REGISTER ACCOUNT ---");System.out.print("Enter username (3-30 characters): ");String username=scanner.nextLine().trim();System.out.print("Enter password (minimum 6 characters): ");String password=scanner.nextLine();if(!username.matches("[A-Za-z0-9_.-]{3,30}")){System.out.println("Username must be 3-30 characters and use letters, numbers, dot, underscore or hyphen.");return;}if(password.length()<6){System.out.println("Password must contain at least 6 characters.");return;}if(userDao.usernameExists(username)){System.out.println("Username already exists.");return;}Role role=selectRole();if(role==null){System.out.println("Invalid role selection.");return;}if(userDao.register(new User(0,username,password,role.name(),"PENDING"))){System.out.println("Registration successful. Account status: PENDING. Wait for administrator approval.");}}catch(SQLException e){System.out.println("Registration failed: "+e.getMessage());}}
+    private Role selectRole(){Role[] roles=Role.values();System.out.println("Select role:");for(int i=0;i<roles.length;i++)System.out.println((i+1)+". "+roles[i]);System.out.print("Enter choice: ");try{int n=Integer.parseInt(scanner.nextLine().trim());return n>=1&&n<=roles.length?roles[n-1]:null;}catch(NumberFormatException e){return null;}}
+    private boolean loginAccount(){try{System.out.println("\n--- LOGIN ---");System.out.print("Username: ");String username=scanner.nextLine().trim();System.out.print("Password: ");String password=scanner.nextLine();User u=userDao.login(username,password);if(u==null){System.out.println("Invalid username or password.");return false;}if(!"APPROVED".equals(u.status())){System.out.println("Your account is "+u.status()+". Please wait for approval.");return false;}userDao.logLogin(u);System.out.println("\nLogin successful! Welcome, "+u.username()+" ("+u.roles()+")");return routeToMenu(u);}catch(SQLException e){System.out.println("Login failed: "+e.getMessage());return false;}}
+    private boolean routeToMenu(User u){Role role;try{role=Role.valueOf(u.roles());}catch(IllegalArgumentException e){System.out.println("Unknown role: "+u.roles());return false;}RoleMenu menu=switch(role){case ADMIN->new AdminMenu(u,userDao,scanner);case FINDER->new FinderMenu(u,userDao,scanner);case OWNER->new OwnerMenu(u,userDao,scanner);};return menu.show();}
+}
